@@ -1,0 +1,348 @@
+\documentclass[male,czech]{kitheses}
+\usepackage{ifthen}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{afterpage}
+\usepackage{microtype}  % přesnější typografie
+
+% workaround for imcompatibility of czech babel¨ and biblatex
+
+\iftutex
+\else
+\usepackage{etoolbox}
+\makeatletter
+\newcommand\my@hsyphen{-}
+\newcommand\my@apostroph{'}
+\patchcmd\select@language{-}{\my@hyphen }{}{\fail}
+\patchcmd\select@language{'}{\my@apostroph }{}{\fail}
+\makeatother
+\fi
+
+\usepackage[style=iso-numeric,shortnumeration=true]{biblatex}
+\addbibresource{thesis.bib}
+
+\iftutex
+	\usepackage{fontspec}
+	\setmainfont{Libertinus Serif}
+	\setsansfont{Libertinus Sans}
+	\setmonofont[Scale=MatchLowercase]{Source Code Pro}
+	\usepackage{unicode-math}
+	\setmathfont{Libertinus Math}
+\else
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+	\usepackage{libertine}
+	\usepackage{fourier}
+	\renewcommand{\ttdefault}{pxtt}
+\fi
+
+\usepackage{csquotes}
+
+\usepackage{listings}
+
+\lstset{ %
+  language=Python,                % the language of the code
+  basicstyle=\small\ttfamily,    
+  backgroundcolor=\color{white},   % choose the background color. You must add \usepackage{color}
+  showspaces=false,                % show spaces adding particular underscores
+  showstringspaces=true,           % underline spaces within strings
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  frame=single,                    % adds a frame around the code
+  tabsize=3,                       % sets default tabsize to 2 spaces
+  breaklines=true,                 % sets automatic line breaking
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  keywordstyle=\bfseries,          % keyword style
+  commentstyle=\rmfamily,       % comment style
+  stringstyle=\itshape\color,   % string literal style
+}
+
+
+\newcommand{\UV}[1]{\quotedblbase{}#1\textquotedblleft{}}
+
+\newcommand{\ZT}[1]{\colorbox{yellow}{\color{red}{#1}}}
+
+\newcommand{\univerzita}{Univerzita Jana Evangelisty Purkyně \\v Ústí nad Labem}
+\newcommand{\fakulta}{Přírodovědecká fakulta}
+\newcommand{\katedra}{Katedra informatiky}
+\newcommand{\program}{Aplikovaná informatika}
+\newcommand{\obor}{Informační systémy}
+
+
+% TOTO JE POTŘEBA ZMĚNIT !!!!!!
+
+\newcommand{\nazevcz}{\ZT{Závěrečná práce na KI PřF UJEP}}        % zde VYPLŇTE český název práce (přesně podle zadání!)
+\newcommand{\nazeven}{\ZT{Thesis on KI PřF}}     % zde VYPLŇTE anglický název práce (přesně podle zadání!)
+\newcommand{\autor}{\ZT{Jiří Fišer}}           % zde VYPLŇTE své jméno a příjmení
+\newcommand{\rok}{\the\year}                
+\newcommand{\vedouci}{\ZT{RNDr. Jiří Škvor, Ph.D.}}         
+% zde VYPLŇTE jméno a příjmení vedoucího práce, včetně titulů
+\newcommand{\vedouciDAT}{\ZT{RNDr. Jiřímu Škvorovi, Ph.D.}}   
+% zde VYPLŇTE jméno a příjmení vedoucího práce, včetně titulů ve třetím pádě
+                                                           
+
+\renewcommand{\arraystretch}{1.23}
+
+\renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter}. #1}{}}
+\pagestyle{fancy}
+
+\usepackage{varioref}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]{hyperref}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{
+\LARGE
+\univerzita\\[16pt]
+\fakulta
+}
+
+\vspace{2cm}
+\resizebox{8.42cm}{!}{%
+\ifthenelse{\boolean{czech}}
+{\includegraphics{LOGO_PRF_CZ_RGB_standard.jpg}}
+{\includegraphics{LOGO_PRF_EN_RGB_standard.jpg}}}
+
+\vspace{2cm}
+{
+\Huge\sffamily
+\nazevcz\par
+\vspace{0.6cm}
+\Large\scshape bakalářská práce
+}
+\end{center} 
+ 
+\vfill
+{
+\large
+\begin{tabular}{>{\bfseries}rl}
+    Vypracoval: 	& \autor\\
+    Vedoucí práce: 	& \vedouci\\
+&\\
+Studijní program:       & \program\\
+Studijní obor:          & \obor\\
+\end{tabular} 
+}
+\vspace{1.5cm}
+\begin{center}
+  \Large\scshape   Ústí nad Labem \rok
+\end{center}
+
+\cleardoublepage
+\thispagestyle{empty}
+\pagecolor{yellow}
+{\Large Namísto žlutých stránek vložte digitálně podepsané zadání kvalifikační práce poskytnuté vedoucím katedry.\\\
+Zadání musí zaujímat právě dvě strany.
+}
+
+Zadání je nutno vložit jako PDF pomocí některého nástroje, který umožňuje editaci dokumentů (se zachováním
+elektronického podpisu).
+
+V Linuxe lze například použít příkaz \texttt{pdftk}.
+
+\clearpage
+\thispagestyle{empty}
+\afterpage{\nopagecolor}
+~
+\clearpage
+
+\thispagestyle{empty} 
+{\bfseries Prohlášení}
+
+\vspace{0.5cm}
+Prohlašuji, že jsem tuto bakalářskou práci vypracoval\ifthenelse{\boolean{feminum}}{a}{}
+samostatně a použil\ifthenelse{\boolean{feminum}}{a}{}
+jen pramenů, které cituji a uvádím v přiloženém seznamu literatury.
+
+\vspace{0.5em}
+
+Byl\ifthenelse{\boolean{feminum}}{a}{} jsem seznámen\ifthenelse{\boolean{feminum}}{a}{} 
+s tím, že se na moji práci vztahují práva a povinnosti vyplývající ze
+zákona c. 121/2000 Sb., ve znění zákona c. 81/2005 Sb., autorský zákon, zejména se
+skutečností, že Univerzita Jana Evangelisty Purkyně v Ústí nad Labem má právo na uzavření
+licenční smlouvy o užití této práce jako školního díla podle § 60 odst. 1 autorského zákona, a
+s tím, že pokud dojde k užití této práce mnou nebo bude poskytnuta licence o užití jinému
+subjektu, je Univerzita Jana Evangelisty Purkyně v Ústí nad Labem oprávněna ode mne
+požadovat přiměřený příspěvek na úhradu nákladu, které na vytvoření díla vynaložila, a to
+podle okolností až do jejich skutečné výše.
+
+\vspace{2em}
+
+V Ústí nad Labem dne \today   \hfill Podpis: \makebox[4cm][s]{\dotfill}
+
+\cleardoublepage
+\thispagestyle{empty}
+~
+\vfill
+
+\begin{flushright}
+    Děkuji vedoucímu práce \ZT{\vedouciDAT}\\ 
+    za neocenitelné rady a pomoc při tvorbě bakalářské práce.
+\end{flushright}
+
+\cleardoublepage
+
+\textsc{\nazevcz}
+
+\textbf{Abstrakt:}
+
+Abstract práce uvádí základní téma práce a především její výstupy. Rozsah abstraktu by měl být alespoň osmdesát slov (abstrakty a klíčová slova se však musí vejít na stránku).
+
+\textbf{Klíčová slova:} tři až pět klíčových slov resp. termínů, která usnadní případné vyhledávání závěrečné práce, v pořadí od obecnějších ke konkrétnějším
+
+\bigskip
+
+
+\textsc{\nazeven}
+
+\textbf{Abstract:}
+
+The abstract states the main topic of the thesis and mainly its outcomes. The length of the abstract should be at least eighty words (however, abstracts and keywords must fit on a page)
+
+\textbf{Keywords:} three to five key words or terms to facilitate a possible search of the thesis, in order from more general to more specific
+
+\tableofcontents
+
+\addchap{Úvod}
+
+Úvod bakalářské práce má dvě povinné částí
+
+\begin{itemize}
+\item úvodní seznámení s (širší) problematikou a aktuálním stavem v oblasti (pro neznalého čtenáře) včetně případné objektivní motivace 
+\item cíle práce podle zadání ve formulaci autora práce
+\end{itemize}
+
+Nepovinně lze uvést i stručný popis jednotlivých kapitol práce (co v nich le nalézt).
+
+Text v této šabloně by Vám měl pomoci s tvorbou závěrečné práce. Je však velmi stručný a tak doporučuji přečtení dalších zdrojů např. \cite{Katuscakc2008} nebo 
+\cite{Ticha2009}. Pokud nejsou tyto zdroje v souladu s informacemi uvedenými v tézo šabloně, pak je autoritativním zdrojem tato šablona a její formátování.
+
+\chapter{Základní členění bakalářské práce}
+
+\section{Kapitoly}
+
+Bakalářská práce by měla být členěna na tři až  šest kapitol nejvyšší úrovně (nepočítaje úvod a závěr). Ty by měly odpovídat osnově práce, ale nikoliv doslovně. Jiné mohou být názvy a dokonce i počet kapitol. To jest, některé body osnovy lze rozpracovat ve více kapitolách a naopak některé body lze združit do jediné kapitoly.
+
+Důležité je, aby bylo členění přibližně rovnoměrné. Problematické jsou především kapitoly malého rozsahu (1-3 stránky) respektrive naopak kapitola zahrnující podstatnou část textu.
+
+Kapitoly nejvyšší úrovně vždy začínají na nové stránce, která musí být lichá tj. na pravé straně. Pokud předchozí kapitola končí na liché straně, vkládá se tzv. vakát -- zcela prázdná strana. 
+
+\section{Sekce resp. podkapitoly}
+
+\LaTeX podporuje čtyři úrovně vnoření kapitol (kromě kapitol i sekce, podsekce, a podpodsekce), což by mělo být více než dostatečné. Druhou úrovní jsou sekce, jejichž rozsah by měl být alespoň jednu stranu, mohou však být
+i výrazně delší. Zobrazují se v obsahu a jsou číslované a lze je tudíž snadno odkazovat. Měli by být použity b každé kapitole kromě úvodu a závěru.
+
+\subsection{Podsekce}
+
+Podsekce se už používají méně často a běžně se vyskytují i dále nečleněné sekce. Nejsou číslovány a nejsou zobrazeny v obsahu. Rozsah by měl být alespoň dva odstavce.
+
+\subsubsection{Podpodsekce}
+
+Podpodsekce se používají jen velmi zřídka, typicky jen u kapitol či sekcí popisující systémy s výraznou hierarchií. Tvořeny mohou být i jediným odstavcem (nikoliv však ale jedinou řádku, zde zvažte spíš použití definičního výčtu).
+
+\section{Rozsah bakalářské práce}
+
+Optimální rozsah bakalářské práce není možné stanovit, neboť závisí na jejím charakteru. Práce jejíž součástí je vytvoření aplikace mohou být menšího rozsahu než práce čistě popisné. I v tomto případě by však měla mít alespoň třicet stran (nepočítaje úvodní stránky až po obsah a stránky od seznamu použitých zdrojů dále a prázdné stránky tzv. vakáty).
+
+Maximální rozsah práce je ještě obtížnější stanovit. Obecně však doporučuji v případě, že pokud rozsah (opět bez povinných částí) přesáhne osmdesát stran je vhodné uvažovat o redukci (ne všechno, co jste napsali musí být nakonec uvedeno ve finální verzi) respektive přesunu do externích příloh umístěnách na Githubu (viz příloha \vref{sec:ep}). Týká se to především různých schémat, obrazového materiálu apod.
+
+\chapter{Typografie}
+
+Při tvorbě bakalářské práce byste měli dodržovat základní zásady typografie. Bakalářská práce by měla být přehledná a dobře čitelná. A možná i krásná (uvědomuji si, že krása je subjektivní).
+
+\section{Písmo}
+
+Na naší katedře není předepsáno, jaké písmo by mělo být použito při sazbě práce. Měli byste však dodržovat několik zásad.
+
+\begin{itemize}
+\item pro sazbu většiny textu by mělo být použito tzv. knižní písmo tj. písmo určené
+pro sazbu soudobých knih (především odborných). Doporučit lze antikvová písma a resp. písma lineární (bezpatková).
+\item pro výpisy kódu používejte neproporcionální písmo (pro ostatní text naopak proporciální)
+\item pokud používáte více druhů písma, pak by měla být vizuálně kompatibilní (nejlepší je použít písma, která jako kompatibilní vytvořili či alespoň doporučili typografové)
+\end{itemize}
+
+V šabloně je využita rodina písma \textit{Libertinus} (odvozená z písma \textit{Linux Libertine}) s výjimkou neproporcionálního písmo, pro něž bylo zvoleno písmo \textit{Source Code Pro}, které podporuje výrazně větší počet řezů (kurzíva tučné).
+
+Standardní velikost písma kvalifikační práce je 12 bodů (přesněji řečeno tzv. pica bodů tj. 12/72 palce). Tato velikost však ve většině případů neodpovídá žádnému viditelnému rozměru písma (v klasické typografii je to výšky kuželky, na níž je umístěn vystouplý reliéf písma). Z  tohoto důvodů se skutečná výška a především šířka písmen může u jednotlivých písmen viditelně lišit. To je problém, pokud se znaky různých písem vyskytují vedle sebe. Často se výrazněji liší například výška antikvy a  neproporcionálního písma. V tomto případě je často nutné velikost neproporcionálních písem mírně zmenšit (tato šablona tak v případě využití XeTeXu nebo LuaTeXu činí automaticky).
+
+Optimální řádkování pro bakalářské práce je 1½ (použité i v této šabloně).
+
+\section{Základní typografické prohřešky}
+
+\subsection{Jednopísmenné předložky a spojky na konci řádku}
+
+Dle českých typografických pravidel je chybou použití jednopísmenných předložek a spojek na samém konci řádků. 
+Určitou výjimkou jsou spojky \UV{a} a \UV{i}, které jsou tolerovatelné (i když nikoliv případě, že jsou psány velkým písmenem například na začátku věty).
+
+Jediným řešením je vložení nezalomitelných mezer mezi předložku resp. spojku a následující slovo. To se může dít automaticky (v \LaTeX u se používá externí program \texttt{vlna}), ale lze to dělat i ručně (nejlépe jen  na místech, kde bylo toto pravidlo porušeno).
+
+Pozor: Toto pravidlo se týká i případů, kdy je bezprostředně před předložkou či spojkou i nějaký nepísmenný
+znak např. otvírací závorka či uvozovka).
+
+Striktní typografická pravidla si vynucují použití nezalomitelné mezery i na dalších místech. Pro kvalifikační práce je důležité jeho využití mezi číslem a kvantifikovanou veličinou nejčastěji fyzikální jednotkou tj, např. 42~kg nebo 256~bytů). V vtomto případě nezbývá nic jiného než ruční vkládání.
+
+\subsection{Parchanti}
+
+Jako \textit{parchant} se označují případy, kdy stránka začíná posledním krátkým řádkem odstavce (tzv. sirotek), případně končí-li stránka samostatným nadpisem nebo prvním řádkem odstavce (tzv. vdova). Pozor na případy, kdy stránka začíná či končí plovoucím obrázkem či tabulkou (i za nimi či před nimi mohou být parchanti).
+
+Typografické systémy se snaží parchantům zabránit, ne vždy se jim to ale s úspěchem podaří.
+
+\chapter{Grafika}
+
+\chapter{Sazba ukázek kódu}
+
+\chapter{Citace}
+
+\chapter{Zhodnocení} 
+
+\chapter{Závěr}
+
+Závěr je klíčovou kapitolou, která může nejvíce ovlivnit vaši obhajobu. Základní částí závěru je přehledné shrnutí výstupů práce tj. co jste udělali pro dasažení cílů práce. Je nutné se vyhnout hodnocení, zda tím byli splněny cíle práce, či nikoliv (to je úkol posudků a především komise).
+
+\printbibliography[title=Seznam použitých zdrojů]
+
+\appendix
+
+\chapter{Externí přílohy\label{sec:ep}}
+
+Externí přílohy této bakalářské práce jsou umístěny na adrese:\\ \url{https://github.com/Jiri-Fiser/thesis_ki_ujep}.
+
+Na úložiští GitHub mohou byt uloženy tyto externí přílohy:
+
+\begin{itemize}
+\item \textbf{zdrojové kódy}
+\item \textbf{doplňkové texty} (například jak instalovat aplikaci, manuály aplikace)
+\item \textbf{schémata} (především, pokud se nevejdou na stranu A4 a jejich vytištění je tak problematické)
+\item \textbf{screenshoty} (v textu práce lze použít jen omezený počet snímků obrazovky, které navíc nemusí být při černobílém tisku příliš přehledné)
+\item \textbf{videa} (například ovládání aplikace)
+\end{itemize}
+
+V každém případě by to však měli být pouze materiály, které jste vytvořili sami. Materiály jiných autorů uvádějte v seznamu použité literatury (včetně případných odkazů na jejich originální umístění).
+
+V této kapitole stačí uvést pouze základní strukturu úložiště (co se kde nalézá a jakou má funkci) například v podobě tabulky. 
+
+\begin{longtable}{ll}
+\hline
+ki-thesis.pdf & text práce v PDF \\
+ki-thesis.tex & zdrojový kód práce v \LaTeX{}u \\
+kitheses.cls & definice třídy dokumentů (rozšířená třída \texttt{scrbook} \\
+thesis.bib & bibliografická databáze (exportována z citace.com) \\
+LOGO\_PRF\_CZ\_RGB\_standard.jpg  & logo fakulty s českým textem \\
+LOGO\_PRF\_EM\_RGB\_standard.jpg  & logo fakulty s anglickým textem  \\
+\hline
+\end{longtable}
+
+Všechny tyto soubory jsou potřeba pro překlad dokumentu (logo stačí jedno v příslušné jazykové verzi).
+
+\chapter{Další přílohy}
+
+Výjimečně může práce obsahovat i další tištěné přílohy. Obecně však dávejte přednost elektronickým přílohám umístěným na GitHubu (tato kapitola tak bude úplně chybět).´
+
+\end{document}
+
