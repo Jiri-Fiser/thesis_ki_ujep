@@ -1,4 +1,14 @@
-\documentclass[male,czech]{kitheses}
+%volby: 
+% male × female
+% czech × english (zatím funguje jen czech)
+% a studijní program / obor 
+% is_bc (nejvíc odladěno)
+% api_bc
+% api_ing
+% edu_bc
+% edu_ing
+
+\documentclass[male,czech,is_bc]{kitheses}
 \usepackage{ifthen}
 
 \usepackage{amsmath,amssymb}
@@ -9,7 +19,7 @@
 \usepackage{afterpage}
 \usepackage{microtype}  % přesnější typografie
 
-% workaround for imcompatibility of czech babel¨ and biblatex
+% workaround for imcompatibility of czech babel and biblatex
 
 \iftutex
 \else
@@ -25,25 +35,29 @@
 \usepackage[style=iso-numeric,shortnumeration=true]{biblatex}
 \addbibresource{thesis.bib}
 
+
+% fonty lze měnit (detaily viz sekce fonty)
 \iftutex
-	\usepackage{fontspec}
+	\usepackage{fontspec}  % nastavení fontů pro LuaLaTeX a XeLaTeX
 	\setmainfont{Libertinus Serif}
 	\setsansfont{Libertinus Sans}
 	\setmonofont[Scale=MatchLowercase]{Source Code Pro}
 	\usepackage{unicode-math}
 	\setmathfont{Libertinus Math}
 \else
-	\usepackage[utf8]{inputenc}
+	\usepackage[utf8]{inputenc} % nastavení pro PDF LaTeX
 	\usepackage[T1]{fontenc}
-	\usepackage{libertine}
-	\usepackage{fourier}
+	\usepackage{libertinus}
 	\renewcommand{\ttdefault}{pxtt}
 \fi
 
-\usepackage{csquotes}
+\usepackage{csquotes} % uvozovky
+
+% sazba ukázek kódu 
 
 \usepackage{listings}
 
+% ukázka pro nastavení balíku listings pro sazbu ukázek zdrojových kódů
 \lstset{ %
   language=Python,                % the language of the code
   basicstyle=\small\ttfamily,    
@@ -60,20 +74,11 @@
   stringstyle=\itshape\color,   % string literal style
 }
 
-
-\newcommand{\UV}[1]{\quotedblbase{}#1\textquotedblleft{}}
-
+% barevné zvýraznění textů, které je nutno nahradit
 \newcommand{\ZT}[1]{\colorbox{yellow}{\color{red}{#1}}}
-
-\newcommand{\univerzita}{Univerzita Jana Evangelisty Purkyně \\v Ústí nad Labem}
-\newcommand{\fakulta}{Přírodovědecká fakulta}
-\newcommand{\katedra}{Katedra informatiky}
-\newcommand{\program}{Aplikovaná informatika}
-\newcommand{\obor}{Informační systémy}
 
 
 % TOTO JE POTŘEBA ZMĚNIT !!!!!!
-
 \newcommand{\nazevcz}{\ZT{Závěrečná práce na KI PřF UJEP}}        % zde VYPLŇTE český název práce (přesně podle zadání!)
 \newcommand{\nazeven}{\ZT{Thesis on KI PřF}}     % zde VYPLŇTE anglický název práce (přesně podle zadání!)
 \newcommand{\autor}{\ZT{Jiří Fišer}}           % zde VYPLŇTE své jméno a příjmení
@@ -84,15 +89,20 @@
 % zde VYPLŇTE jméno a příjmení vedoucího práce, včetně titulů ve třetím pádě
                                                            
 
+% zvětšuje o 23% vertikální okraje v tabulkách
 \renewcommand{\arraystretch}{1.23}
+
+% nastavení pro záhlaví (co nelze udělat v cls souboru)
 
 \renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter}. #1}{}}
 \pagestyle{fancy}
 
-\usepackage{varioref}
+% nastavení odkazů
+\usepackage{url} % formátování URL, příkaz \url
+\usepackage{varioref} % lepší interní odkazy na obrázky, apod. příkaz \vref
 \usepackage[unicode=true,pdfusetitle,
  bookmarks=true,
- breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]{hyperref}
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]{hyperref} % hypertextové odkazy v PDF
 
 \begin{document}
 \thispagestyle{empty}
@@ -114,7 +124,7 @@
 \Huge\sffamily
 \nazevcz\par
 \vspace{0.6cm}
-\Large\scshape bakalářská práce
+\Large\scshape \ifthenelse{\boolean{bc}}{bakalářská}{diplomová} práce
 }
 \end{center} 
  
@@ -126,7 +136,7 @@
     Vedoucí práce: 	& \vedouci\\
 &\\
 Studijní program:       & \program\\
-Studijní obor:          & \obor\\
+\ifthenelse{\boolean{api}}{Studijní obor:          & \obor\\}{}
 \end{tabular} 
 }
 \vspace{1.5cm}
@@ -156,7 +166,7 @@ V Linuxe lze například použít příkaz \texttt{pdftk}.
 {\bfseries Prohlášení}
 
 \vspace{0.5cm}
-Prohlašuji, že jsem tuto bakalářskou práci vypracoval\ifthenelse{\boolean{feminum}}{a}{}
+Prohlašuji, že jsem tuto \ifthenelse{\boolean{bc}}{bakalářskou}{diplomovou} práci vypracoval\ifthenelse{\boolean{feminum}}{a}{}
 samostatně a použil\ifthenelse{\boolean{feminum}}{a}{}
 jen pramenů, které cituji a uvádím v přiloženém seznamu literatury.
 
@@ -211,7 +221,7 @@ The abstract states the main topic of the thesis and mainly its outcomes. The le
 
 \addchap{Úvod}
 
-Úvod bakalářské práce má dvě povinné částí
+Úvod závěrečné práce má dvě povinné částí
 
 \begin{itemize}
 \item úvodní seznámení s (širší) problematikou a aktuálním stavem v oblasti (pro neznalého čtenáře) včetně případné objektivní motivace 
@@ -223,11 +233,11 @@ Nepovinně lze uvést i stručný popis jednotlivých kapitol práce (co v nich 
 Text v této šabloně by Vám měl pomoci s tvorbou závěrečné práce. Je však velmi stručný a tak doporučuji přečtení dalších zdrojů např. \cite{Katuscakc2008} nebo 
 \cite{Ticha2009}. Pokud nejsou tyto zdroje v souladu s informacemi uvedenými v tézo šabloně, pak je autoritativním zdrojem tato šablona a její formátování.
 
-\chapter{Základní členění bakalářské práce}
+\chapter{Základní členění závěrečné práce}
 
 \section{Kapitoly}
 
-Bakalářská práce by měla být členěna na tři až  šest kapitol nejvyšší úrovně (nepočítaje úvod a závěr). Ty by měly odpovídat osnově práce, ale nikoliv doslovně. Jiné mohou být názvy a dokonce i počet kapitol. To jest, některé body osnovy lze rozpracovat ve více kapitolách a naopak některé body lze združit do jediné kapitoly.
+Závěrečná práce by měla být členěna na tři až šest kapitol nejvyšší úrovně (nepočítaje úvod a závěr). Ty by měly odpovídat osnově práce, ale nikoliv doslovně. Jiné mohou být názvy a dokonce i počet kapitol. To jest, některé body osnovy lze rozpracovat ve více kapitolách a naopak některé body lze združit do jediné kapitoly.
 
 Důležité je, aby bylo členění přibližně rovnoměrné. Problematické jsou především kapitoly malého rozsahu (1-3 stránky) respektrive naopak kapitola zahrnující podstatnou část textu.
 
@@ -246,9 +256,9 @@ Podsekce se už používají méně často a běžně se vyskytují i dále neč
 
 Podpodsekce se používají jen velmi zřídka, typicky jen u kapitol či sekcí popisující systémy s výraznou hierarchií. Tvořeny mohou být i jediným odstavcem (nikoliv však ale jedinou řádku, zde zvažte spíš použití definičního výčtu).
 
-\section{Rozsah bakalářské práce}
+\section{Rozsah závěrečné práce}
 
-Optimální rozsah bakalářské práce není možné stanovit, neboť závisí na jejím charakteru. Práce jejíž součástí je vytvoření aplikace mohou být menšího rozsahu než práce čistě popisné. I v tomto případě by však měla mít alespoň třicet stran (nepočítaje úvodní stránky až po obsah a stránky od seznamu použitých zdrojů dále a prázdné stránky tzv. vakáty).
+Optimální rozsah \ifthenelse{\boolean{bc}}{bakalářské}{diplomové} práce není možné stanovit, neboť závisí na jejím charakteru. Práce jejíž součástí je vytvoření aplikace mohou být menšího rozsahu než práce čistě popisné. I v tomto případě by však měla mít alespoň \ifthenelse{\boolean{bc}}{třicet}{padesát⎄} stran (nepočítaje úvodní stránky až po obsah a stránky od seznamu použitých zdrojů dále a prázdné stránky tzv. vakáty).
 
 Maximální rozsah práce je ještě obtížnější stanovit. Obecně však doporučuji v případě, že pokud rozsah (opět bez povinných částí) přesáhne osmdesát stran je vhodné uvažovat o redukci (ne všechno, co jste napsali musí být nakonec uvedeno ve finální verzi) respektive přesunu do externích příloh umístěnách na Githubu (viz příloha \vref{sec:ep}). Týká se to především různých schémat, obrazového materiálu apod.
 
@@ -263,7 +273,8 @@ Na naší katedře není předepsáno, jaké písmo by mělo být použito při 
 \begin{itemize}
 \item pro sazbu většiny textu by mělo být použito tzv. knižní písmo tj. písmo určené
 pro sazbu soudobých knih (především odborných). Doporučit lze antikvová písma a resp. písma lineární (bezpatková).
-\item pro výpisy kódu používejte neproporcionální písmo (pro ostatní text naopak proporciální)
+\item pro výpisy kódu používejte neproporcionální písmo (pro ostatní text naopak proporciální). Pro základní přehled 
+volně šiřitelných písmen se můžete podívat do dokumentu \href{https://github.com/Jiri-Fiser/thesis_ki_ujep/blob/main/monotyp%C3%A1%C5%99.pdf}{Monotypář}.
 \item pokud používáte více druhů písma, pak by měla být vizuálně kompatibilní (nejlepší je použít písma, která jako kompatibilní vytvořili či alespoň doporučili typografové)
 \end{itemize}
 
@@ -278,7 +289,7 @@ Optimální řádkování pro bakalářské práce je 1½ (použité i v této �
 \subsection{Jednopísmenné předložky a spojky na konci řádku}
 
 Dle českých typografických pravidel je chybou použití jednopísmenných předložek a spojek na samém konci řádků. 
-Určitou výjimkou jsou spojky \UV{a} a \UV{i}, které jsou tolerovatelné (i když nikoliv případě, že jsou psány velkým písmenem například na začátku věty).
+Určitou výjimkou jsou spojky \enquote{a} a \enquote{i}, které jsou tolerovatelné (i když nikoliv případě, že jsou psány velkým písmenem například na začátku věty).
 
 Jediným řešením je vložení nezalomitelných mezer mezi předložku resp. spojku a následující slovo. To se může dít automaticky (v \LaTeX u se používá externí program \texttt{vlna}), ale lze to dělat i ručně (nejlépe jen  na místech, kde bylo toto pravidlo porušeno).
 
