@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kitheses}[2021/11/15 Thesis of KI UJEP]
+\ProvidesClass{kitheses}[2021/11/19 Thesis of KI UJEP]
 
 \RequirePackage{ifthen}
 \RequirePackage{iftex}
@@ -9,11 +9,22 @@
 
 \newboolean{feminum}
 \newboolean{czech}
+\newboolean{api}
+\newboolean{bc}
+\newboolean{is}
+
+\setboolean{is}{false}
 
 \DeclareOption{male}{\setboolean{feminum}{false}}
 \DeclareOption{female}{\setboolean{feminum}{true}}
 \DeclareOption{czech}{\setboolean{czech}{true}}
 \DeclareOption{english}{\setboolean{czech}{false}}
+\DeclareOption{api_bc}{\setboolean{api}{true}\setboolean{bc}{true}}
+\DeclareOption{api_ing}{\setboolean{api}{true}\setboolean{bc}{false}}
+\DeclareOption{edu_bc}{\setboolean{api}{false}\setboolean{bc}{true}}
+\DeclareOption{edu_mgr}{\setboolean{api}{false}\setboolean{bc}{false}}
+\DeclareOption{is_bc}{\setboolean{api}{true}\setboolean{bc}{true}\setboolean{is}{true}}
+
 \ProcessOptions\relax
 
 \ifthenelse{\boolean{czech}}{%
@@ -55,3 +66,11 @@
 \usepackage{babel}
 \fi
 
+\newcommand{\univerzita}{Univerzita Jana Evangelisty Purkyně \\v Ústí nad Labem}
+\newcommand{\fakulta}{Přírodovědecká fakulta}
+\newcommand{\katedra}{Katedra informatiky}
+\ifthenelse{\boolean{api}}{\newcommand{\program}{Aplikovaná informatika}}
+     {\ifthenelse{\boolean{bc}}{\newcommand{\program}{Informatika pro vzdělávání}}
+                               {\newcommand{\program}{Učitelství informatiky pro střední školy}}}
+\ifthenelse{\boolean{is}}{\newcommand{\obor}{Informační systémy}}
+                         {\newcommand{\obor}{}}
