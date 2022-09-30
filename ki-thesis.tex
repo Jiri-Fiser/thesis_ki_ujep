@@ -1,4 +1,4 @@
-%volby: 
+ %volby: 
 % male × female
 % czech × english (zatím funguje jen czech)
 % a studijní program / obor 
@@ -103,6 +103,15 @@
 \usepackage[unicode=true,pdfusetitle,
  bookmarks=true,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]{hyperref} % hypertextové odkazy v PDF
+ 
+\newcommand{\UV}[1]{\quotedblbase#1\textquotedblleft}
+ 
+% odstraňte pokud vám vadí absence zarovnání dole 
+\raggedbottom
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% vlastní začátek dokumentu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 \thispagestyle{empty}
@@ -284,31 +293,356 @@ Standardní velikost písma kvalifikační práce je 12 bodů (přesněji řeče
 
 Optimální řádkování pro bakalářské práce je 1½ (použité i v této šabloně).
 
-\section{Základní typografické prohřešky}
+\section{Základní typografická pravidla}
+
+\section{Znaky, které nenajdete na klávesnici}
+
+I v běžném textu se bohužel vyskytují znaky, které nenajdete na klávesnici.
+Jedná se především o uvozovky a pomlčky (znak \texttt{-} je spojovník nikoliv pomlčka). Ostatní znaky se v práci vyskytnou jen výjimečně.
+
+V \LaTeX{}u lze tyto znaky vkládat pomocí tří základních mechanismů:
+\begin{enumerate}
+\item příkazem
+\item pomocí sekvence speciálních znaků
+\item přímo jako Unicode znaky (v editoru)
+\end{enumerate}
+
+Následující tabulka ukazuje nejčastěji používané znaky, jež nenajdete na klávesnici, ale jejich použití je při české sazbě povinné.
+
+\begin{tabular}{lllcp{3.8cm}}
+\hline
+ & jméno znaku & \LaTeX{} makro & Unicode & popis \\ \hline
+\quotedblbase & spodní dvojité 9-uvozovky& \verb!\quotedblbase! &
+  U+201E & užívány jako úvodní uvozovky \\ 
+`` & horní dvojité 6-uvozovky& \verb!`! &
+  U+201C & užívány jako koncové uvozovky \\ 
+>> & pravé francouzské uvozovky & \verb!>>! & 
+  U+00BB & alternativní úvodní uvozovky \\
+<< & levé francouzské uvozovky & \verb!<<! & 
+  U+00AB & alternativní koncové uvozovky \\
+\quotesinglbase &  spodní jednoduché 9-uvozovky & \verb!\quotesinglbase! & 
+  U+201A  & vnořené úvodní uvozovky \\
+` &  horní jednoduché 6-uvozovky & \verb!``! & 
+  U+2018  & vnořené koncové uvozovky \\
+\ldots & výpustka & \verb!\ldots! &
+ U+2026 &  vypuštěný text \\
+--  & pomlčka & \verb!--! & 
+        & od--do, oddělovač vět \\
+\hline 
+\end{tabular}
+
+Znak tzv. obousměrných uvozovek \verb!"!, jež vznikly v době psacích strojů a přežily na počítačových klávesnicích lze využívat jen na při zápisu zdrojáků programovacích jazyků. Podobně jen ve zdrojácích lze využít trojtečku (= tři tečky). Rozdíl oproti výpustku je malý ale viditelný: 
+výpustek\ldots versus trojtečka...
+
 
 \subsection{Jednopísmenné předložky a spojky na konci řádku}
 
 Dle českých typografických pravidel je chybou použití jednopísmenných předložek a spojek na samém konci řádků. 
-Určitou výjimkou jsou spojky \enquote{a} a \enquote{i}, které jsou tolerovatelné (i když nikoliv případě, že jsou psány velkým písmenem například na začátku věty).
+Určitou výjimkou jsou spojky \enquote{a} a \enquote{i}, které jsou tolerovatelné (i když nikoliv v případě, že jsou psány velkým písmenem například na začátku věty resp. pokud následují hned za otvírací závorkou).
 
 Jediným řešením je vložení nezalomitelných mezer mezi předložku resp. spojku a následující slovo. To se může dít automaticky (v \LaTeX u se používá externí program \texttt{vlna}), ale lze to dělat i ručně (nejlépe jen  na místech, kde bylo toto pravidlo porušeno).
 
-Pozor: Toto pravidlo se týká i případů, kdy je bezprostředně před předložkou či spojkou i nějaký nepísmenný
-znak např. otvírací závorka či uvozovka).
+Pozor: Toto pravidlo se týká i případů, kdy je bezprostředně před předložkou či spojkou i nějaký nepísmenný znak např. otvírací závorka či uvozovka).
 
-Striktní typografická pravidla si vynucují použití nezalomitelné mezery i na dalších místech. Pro kvalifikační práce je důležité jeho využití mezi číslem a kvantifikovanou veličinou nejčastěji fyzikální jednotkou tj, např. 42~kg nebo 256~bytů). V vtomto případě nezbývá nic jiného než ruční vkládání.
+Striktní typografická pravidla si vynucují použití nezalomitelné mezery i na dalších místech. Pro kvalifikační práce je důležité jeho využití mezi číslem a kvantifikovanou veličinou nejčastěji fyzikální jednotkou tj, např. 42~kg nebo 256~bytů). V tomto případě nezbývá nic jiného než ruční vkládání.
+
+Nezalomitelná mezera se v \TeX{}u zapisuje znakem vlnka \texttt{\textasciitilde} (kolem znaku nesmí být žádné mezery).
 
 \subsection{Parchanti}
 
 Jako \textit{parchant} se označují případy, kdy stránka začíná posledním krátkým řádkem odstavce (tzv. sirotek), případně končí-li stránka samostatným nadpisem nebo prvním řádkem odstavce (tzv. vdova). Pozor na případy, kdy stránka začíná či končí plovoucím obrázkem či tabulkou (i za nimi či před nimi mohou být parchanti).
 
-Typografické systémy se snaží parchantům zabránit, ne vždy se jim to ale s úspěchem podaří.
+Typografické systémy se snaží parchantům zabránit, ne vždy se jim to ale s úspěchem podaří. Pokud se to napodaří je nutné manuální řešení. Nejjednodušším bývá zkrácení či prodloužení předchozího textu. Není-li to možné, lze výjimečně vložit na vhodné místo ruční zalomení stránky (v \LaTeX{}u doporučuji příkaz \verb!clearpage!.
+
+\subsection{Vertikální a horizontální zarovnávání}
+
+Běžný text bakalářské práce by měl být zarovnán do bloku tj. jak zleva tak zprava (automatickou výjimkou jsou tzv. východové řádky odstavců, které se zarovnávají jen zleva).
+
+V \LaTeX{} je relativně časté přetečení řádků, tj. situace, kdy systém nenajde vhodné místo pro zalomení a tak řádek pokračuje i do okraje. Pokud už tato situace nastane, pak existují dvě řešení, buď změníte text na řádku (zkrátíte ho či prodloužíte) nebo pomůžete algoritmu pro dělení slov, tím že explicitně vyznačíte místa, kde může dojít k dělení pomocí příkazu \verb!\-!. Toto řešení je možné využít i v případě, že se nějaké slovo rozdělí viditelně chybně (slovo se nebude dělit v jiných než vyznačených místech).
+
+Dělení slov je jen pomocný mechanismus (nikoliv pravopisný) a tak pro něj v češtině neexistují závazná pravidla pouze úzus a doporučení. Při dělení se primárně vychází z výslovnosti nikoliv ze zápisu slov (to je klíčové především cizích slov, která se čtou podle jiných pravidel než v češtině). Pro základní orientaci stačí znát tato pravidla (aplikují se postupně):
+
+\begin{itemize}
+\item nedělí se jednoslabičná slova
+\item neoddělují se jednoznakové předpony
+pokud je jasné složení slov z morfémů (předpona, kmen, přípona) pak se dělí podle morfémů (výjimkou jsou přípony začínající samohláskou). Slovo může mít i více předpon a přípon: např. ne-pře-mosti-tel-ný.
+\item v ostatních případech se dělí podle slabik (nikoliv však mezi samohláskami!) např. fi-lo-zo-fie
+\item v případě styku dvou a více souhlásek se dělí (kdekoliv) mezi nimi s výjimkou případů, kdy toto seskupení může stát na začátku slov (např. \UV{st}, \UV{př}, \UV{str}), kdy je vhodnější dělit před skupinou hlásek např. pe-strý (i když i dělení pes-trý a pest-rý jsou možná).
+\end{itemize}
+
+Detailnější pravidla naleznete například v jazykové poradně Ústavu pro jazyk český [X], doporučená dělení pro konkrétní slova můžete nalézt například ve Wikislovníku.
+
+Pokud k vertikálnímu přetečení dochází často, je možné lokálně či globálně (tj. v tzv preambuli) dát sázecímu algoritmu více volnosti. Nejvhodnější je použití balíku \textit{microtype}, který zapíná další možnosti po vyrovnání sazby např. drobné změny v šířce písmen. Navíc se tím aktivuje tzv. optické zarovnávání (vpravo), kdy je jemně porušeno přesné zarovnání za účelem vyrovnání optického klamu (např. řádka zakončená tečkou se při přesném zarovnání jeví jako kratší). Méně vhodné, je použitá příkazu \verb!\sloppy!, které zvyšuje toleranci algoritmu. Výsledkem tak může být odstranění některých přetečení, za cenu příliš velkých mezer mezi slovy (efekt je podobný MS Wordu).
+
+Z tohoto důvodů je v šabloně bakalářské práce vložen balík  \textit{microtype}, ale příkaz \verb!\sloppy! je využit pouze v rámci seznamu literatury, kde je správné zarovnávání komplikované (především při použití dlouhých URL).
+
+\LaTeX se snaží i o vertikální zarovnání tj. udržování stejného horního a dolního okraje. Zatímco v případě horního okraje je zarovnání zcela přirozené, může zarovnání dole vést k problémům. Aby ho bylo dosaženo musí totiž LateX roztahovat tzv. pružné vertikální mezery např. mezery před a za nadpisy sekcí, před plovoucími objekty, apod.
+
+Takových míst je ale často na stránkách málo a tak se to nemusí vůbec podařit resp. se použije neakceptovatelná vertikální výplň. 
+
+Nejjednoduššší řešením je příkaz \verb!\raggedbottom!, jenž zarovnání dole vypíná. Nevznikají tak enormně velké horizontální mezery, chybějící zarovnání je však často rušivé hlavně u vedlejších
+stran u oboustranného tisku. V praxi se však ukazuje, že u závěrečných prací  je závažnějším nedostatkem nadměrné roztahování a proto je \verb!\raggedbottom! v této šabloně použit (na konci preambule), lze jej však přirozeně smazat či zakomentovat.
+
 
 \chapter{Grafika}
 
 \chapter{Sazba ukázek kódu}
 
+Sazba ukázek kódu je klíčová pro bakalářské práce věnované implementaci nějaké aplikace či knihovny.
+
+Základní zásady pro sazbu ukázek kódu:
+
+\begin{enumerate}
+\item 
+\end{enumerate}
+
 \chapter{Citace}
+
+Citace tvoří jeden ze základních pilířů závěrečné práce. Platí zde základní pravidlo: pokud použijete 
+jakoukoliv zdroj informací, pak je nutné tento zdroj citovat, tj. uvést příslušný zdroj.
+
+Zdrojem je ve většině případů text, ale může to být i obrázek, audiovizuální materiál či ve speciálních případech i ústní sdělení. V případě informatických prací je častým zdrojem u zdrojový kód.
+
+Informaci ze zdroje můžete použít dvěma různými způsoby:
+
+\begin{itemize}
+\item přímo převzít (u textů je to známé Ctrl-C, Ctrl-V)
+\item použít jako základ vlastního intelektuálního výtvoru (textu, grafiky, programu, apod.), tj. použijete jen informaci, ale její formu změníte.
+\end{itemize}
+
+Prví druh tzv. přímé citace by měli mít v informatických závěrečných prací jen velmi omezený rozsah (méně než stránka), neboť jejich přínos pro hodnocení práce je diskutabilní. Přesto jsou však případy, kdy jsou vhodné:
+
+\begin{enumerate}
+\item matematické definice a tvrzení (věty, axiomy)
+\item definice termínů z neinformatických oborů (např. společenských věd)
+\item citace norem resp. standardů
+\end{enumerate} 
+
+Citace mají tři základní cíle:
+\begin{enumerate}
+\item určují, co je váš vlastní intelektuální přínos a co jste pouze převzali
+\item pomáhají určovat primárního autora (resp. autory)
+\item definují kontext vaší práce resp. mohou usnadňovat nalezení dalších souvisejících informací
+\end{enumerate}
+
+Jakákoliv vědecká práce nevzniká na zelené louce a tak jsou citace její nezbytnou součástí. V rámci práce běžně navazujeme na existující výzkumy, projekty, technologie apod. Stejně tak se můžeme odkazovat na autority či s nimi polemizovat.
+
+První dva cíle také úzce souvisejí s plagiátorstvím. Pokud v práci použijete myšlenku či údaj bez citování je vaše práce plagiátem. I když se to v obecném mínění vztahuje jen na přímé kopírování, není tomu tak. Přímé kopírování se jen snadněji vyhledává a prokazuje. Je také obtížnější jej kvantifikovat.
+
+V případě přímého kopírování, jež není označeno jako přímá citace, postačuje i relativně malý rozsah (například věta, jeden obrázek, jedna procedura), aby byla práce označena jako plagiát. Plagiát není možno obhájit a v případě většího rozsahu hrozí i vyloučení ze studia. Za přímé kopírování se považují i případy, kde je změna jen formální (změna slovosledu, náhrada synonym, zkrácení, vložení textové výplně, změna barvy či afinní transformace obrázku).
+
+V případě převzetí myšlenky jde o zjevné plagiování, pokud je tato myšlenka důležitou částí práce (podílí se na splnění cílů). 
+
+To, že není plagiátorství odhaleno před obhajobou práce, není důkazem, že se nejedná o plagiát. Pokud je plagiátorství zjištěno později, může vám být odebrán titul i zpětně (a jak jste si jistě všimli, plagiátorství je běžně využíváno v politickém boji).
+
+V každém případě si uvědomte, že plagiátorství je druh krádeže a že ani vy nechcete, aby někdo vaše myšlenky nebo dokonce váš text vydával za vlastní.
+
+\section{Označování citací}
+
+Označování citace má dvě části. Za prvé je nutno označit, jaká část práce je citací (rozsah) a jaký je původní zdroj. 
+
+Zdroj je vždy určen odkazem na bibliografický záznam, které jsou v případě bakalářské práce uvedeny v kapitole \textit{Použité zdroje} na konci práce. Odkaz může mít různý tvar, ale preferovaný styl je uvedení čísla záznamu v hranatých závorkách. V případě použití našeho latexovského stylu stačí použít příkaz \verb!\cite{id-zaznamu}!. V případě potřeby lze zdroj zpřesnit uvedením např. stránky či kapitoly, jež se uvádí za číslem záznamu (po čárce a ještě před uzavírající hranatou závorkou). V \LaTeX u lze využít nepovinný parametr příkazu \verb!cite!.
+
+Označení rozsahu se poněkud liší u přímých a nepřímých citací.
+
+U přímých citací je označení rozsahu kritické. V případě citací, které jsou kratší než odstavec je nutné text vyznačit kurzívou a zahrnout do uvozovek. Odkaz musí následovat hned za označným textem.
+
+U citací v rozsahu odstavce či více odstavců se využívá zvětšení okrajů na levé i pravé straně odstavců (viditelné na první pohled). V \LaTeX u lze použít prostředí \verb!quote! nebo \verb!quotation!. Text by měl být navíc v uvozovkách. Kurzíva je možná, ale u rozsáhlejších citací není příliš vhodná. Odkaz se umisťuje na konec posledního převzatého odstavce.
+
+Speciální případ je možný v případě matematických definic a vět. Pokud jsou v rámci kapitoly převzaty jen z jediného zdroje, lze na počátku kapitoly uvést hromadný odkaz například v podobě věty: Všechny definice a věty uvedené v této kapitole jsou převzaty z [X].
+
+V případě převzatých obrázků se odkaz umisťuje na konec popisku. Aby však bylo zřejmé, že se jedná o přímé převzetí (kurzívu ani uvozovky nelze použít) je nutné explicitně vyjádřit, že obrázek byl převzat ze zdroje bez podstatných změn například: (převzato z [X]) nebo (překresleno z [X]).
+
+U nepřímých citací je vyznačování rozsahu volnější. Nejjednodušší je uvádění holé citace na konci vět (před tečkou) nebo konci odstavce (za poslední tečkou). V mnoha případech je ale možné citace
+uvádět explicitněji a stylistiky je provázet s okolním textem.
+
+příklady:
+
+\begin{itemize}
+\item zajímavá alternativa je popsána v [x]
+\item údaj je je převzat z [x]
+\item použití návrhového vzoru poprvé popsal N.N v [x]
+\item volně přeloženo z [x]
+\item řešení bylo navrženo uživatelem N v [x] (vhodné např. pro stackoverflow a podobné zdroje)
+\end{itemize}
+
+Explicitnější vyjádření je nutno použít i v případě, že rozsah citace přesahuje odstavec.
+
+\begin{itemize}
+\item následující příklad je převzat z [x]
+\item výčet vychází z [x] je však doplněn o ...
+\end{itemize}
+
+Teoreticky lze podobné řešení využít i u celých sekcí či kapitol (kapitola je zpracována na základě [x]). V tomto případě je však nutné předpokládat, že v dané kapitole není žádná autorská myšlenka, a že autor se nesnažil najít alternativní pohledy či zdroje (a hodnotit tak, lze pouze autorovu schopnost výběru informací či stylistiky).
+
+Výjimečně lze uvádět i několik citací se shodným či překrývajícím se rozsahem např. \textit{následující specifikace je převzata z [x] a [y]}. To je však tolerovatelné jen v případě, v kdy by oddělení oddělení zdrojů bylo obtížné nebo nepřehledné a spojení nepřináší problémy s intelektuálním vlastnictvím (mají stejného autora či copyright). Zcela nepoužitelné jsou v případě většího rozsahu citace (např. na úrovni sekcí či kapitol)!
+
+
+V případě obrázků je vhodné uvést explicitnější specifikaci, jak byl originální obrázek pozměněn resp, rozšířen.
+
+Příklad:
+
+\begin{itemize}
+\item (převzato z [x] a doplněno)
+\item (převzato z [x], přeloženo)
+\item (upraveno z [x] pro novou verzi technologie ...)
+\item (inspirováno diagramem [x])
+\item (viz také [x] pro data X)
+\end{itemize}
+
+
+\section{Bibliografický záznam}
+
+Biblografický záznam je datová struktura, jenž má dvě základní funkce:
+
+\begin{enumerate}
+\item jednoznačné identifikování zdroje
+\item určení primární odpovědnosti (typicky je to autor resp. autoři, u webových zdrojů to však často bývá korporace).
+\end{enumerate}
+
+Pro každý typ zdrojového dokumentu (zdroje) existuje množina klíčových atributů, které by měly být specifikovány (ne zcela vhodně označované jako povinné) a další, které hrají jen pomocnou roli.
+
+V praxi však může nastat situace, kdy není zřejmé, jaký typ dokumentu pro daný zdroj zvolit resp.  nelze zjistit hodnoty klíčových atributů. V tomto případě je nutné improvizovat a snažit se, aby záznam plnil v maximální míře obě funkce.
+
+Struktura bibliografického záznamu je v zásadě dána těmito dimenzemi:
+
+\begin{description}
+\item[médium] -- základní dělení je na tištěné dokumenty a online dokumenty (dokumenty na elektronických nosičích tvoří jakási přechod mezi oběma typy dokumentů)
+\item[samostatnost] -- zdroj může být samostatný nebo součást rozsáhlejšího zdroje
+\item[periodičnost] -- periodický dokument vychází po jednotlivých částech, přičemž počet částí není předem znám (např. časopis).  
+\end{description}
+
+\subsection{Tištěné samostatné dokumenty neperiodické}
+
+Typickým příkladem samostatného tištěného dokumentu je kniha či monografie.
+
+Základním zdrojem informací pro bibliografický záznam u knih je tzv. tiráž, tj. soupis vydavatelských údajů uvedený na konci knihy či na stránce za titulem. Využít lze i další zdroje (např. katalogy knihoven či knižní e-shopy, bibliografické záznamy v jiných dokumentech), ale v tomto případě je nutné provádět kontrolu, neboť tyto sekundární zdroje často obsahují chyby.
+
+\textbf{klíčové atributy:}
+
+\begin{description}
+\item[ISBN]: ISBN je celosvětový jedinečný identifikátor neperiodických tištěných dokumentů. Pokud ho kniha má, pak je dokument jednoznačně identifikován (a další identifikace už hraje jen sekundární roli). Pomlčky v ISBN nejsou součástí identifikátoru a lze je vynechávat (i když občas se jedno ISBN přiděluje více svazkům). Navíc existují ve dvou podobách ISBN-10 s deseti číslicemi a ISBN-13 s třinácti. Pokud jsou k dispozici oba je vhodnější uvídět ISBN-13 (i když ISBN-10 lze snadno mapovat na ISBN-13).
+\item[název]: název knihy je povinný údaj a měl by být vždy vyplněn. Použit by měl být vždy originální název bez úprav. Jedinou přípustnou úpravou je změna velkých písmen (verzálek) na malá, které by mělo odpovídat pravidlům příslušného jazyka.
+\item[podnázev]: některé knihy mají i podnázev Někdy je těžké rozeznat, co je název a podnázev. Zde platí pravidlo, že název by neměl obsahovat dvojtečku, tečku, středník apod. Od podnázvu je potřeba odlišit název edice. Podnázev je nepovinný (doporučuji uvádět pokud obsahuje klíčové informace).
+\item[autoři]: v bibliografickém záznamu by měli být uvedeni všichni primární autoři (tj. není potřeba uvádět překladatele, ilustrátory, apod.)
+\item[vydání]: označení konkrétního vydání. Je důležité především tehdy, když není známo ISBN a existuje více odlišných vydání (s různým obsahem)
+\item[nakladatel]: uvádí se jméno nakladatelství, a to především z důvodů odpovědnosti
+\item[místo vydání]: uvádí se jméno města, popřípadě stát, především tehdy pokud není jednoznačné (např. Cambridge) a to ve stručné podobě (např. stačí \textit{United Kingdom}).  Podobně stručný by měl být název nakladatelství (tj. bez označení typy společnosti, apod., rodičovské společnosti, apod.)
+V dnešní době globalizace je tento údaj v mnoha případech nevýznamný (tj. ho lze vynechat, především tehdy pokud je nakladatelství neznámé).
+\item[rok vydání]: rok vydání přesněji identifikuje dokument. Pokud ho nelze zjistit, lze jej nahradit rokem copyrightu (v tomto případě je uvozen znakem \verb!c! např. \verb!c2022!)
+\item[edice]: kniha může být vydána v rámci edice. Edici doporučuji neuvádět, výjimkou jsou edice, které jsou všeobecně známé.
+\item[URL]: uvádí se pouze v případě, že je kniha dostupná onlině a to oficiálně a bez poplatků. Uvedení URL v tomto případě usnadňuje její získání (v tomto případě je ale často lepší citovat ji jako elektronickou knihu).
+\end{description}
+
+\textbf{příklad:}
+
+Následující biblografický záznam byl získán z katalogu systému knihovny UJEP (volba Citace Pro v dolní části výpis záznamu).
+
+RASCHKA, Sebastian a Vahid MIRJALILI. \textit{Python machine learning: machine learning and deep learning with Python, scikit-learn, and TensorFlow.} Second edition. Birmingham: Packt, 2017. Expert insight. ISBN 978-1-78712-593-3.
+
+Tento záznam splňuje základní požadavky, neboť obsahuje údaje týkající se odpovědnosti i jednoznačnou identifikaci dokumentu (a to jak ISBN tak přesným určením vydání).  Zahrnutí podnázvu
+je vhodné, neboť obsahuje dodatečné informace (jména frameworků).
+Nakladatelství je uvedeno ve stručné podobě (tj. \textit{Packt}) je uvedeno ve stručné podobě. Nadbytečné je jen uvedení edice (\textit{Expert insight}).
+
+\subsection{Online samostatné dokumenty neperiodické}
+
+Typickým příkladem je online PDF dokument (včetně elektronické knihy). Dalším příkladem je webové sídlo (\textit{web site}) tj. typicky hierarchický systém více stránek (nikoliv tedy jedna konkrétní web stran).
+
+\begin{description}
+\item[medium]: u online zdrojů se jako médium uvádí slovo \texttt{online}.
+\item[URL]: klíčový údaj pro online zdroje. Některé systémy (např. Wikipedia) poskytují tj. fixní URL, které odkazují na konkrétní verzi dokumentu, resp. stránek. I když jsou tato URL obecně delší, je nutné jim dát přednost, neboť zaručují jedinečnost.
+\item[název]: název nelze vynechat i když ne vždy je jasné, co je hlavním názvem. V tomto případě je možné využít obsahu elementu title v hlavičce HTML (pokud je zdroj v HTML) nebo jiná metadata (například jak je zdroj pojmenován v odkazu).
+\item[autoři]: autor nebývá u mnoha online dokumentů dohledatelný (a v tomto případě je nutné ho vynechat). Rozhodně však věnujte čas zjištění autorství (může být uvedeno i mimo dokument). 
+\item[odpovědná korporace]: typicky je to držitel intelektuálních práv (copyrightu). Důležitý je přdevším v případě, že není znám autor, ale uvádějte ho ve všech případech, kdy je dohledatelný. Většina bibliografických stylů tento atribut nepodporuje resp. ho běžně nezobrazuje. Proto je vhodné pro tento účel využívat atribut \textit{nakladatel} (i když to není totéž).
+\item[verze/čas poslední aktualizace]: nahrazuje rok vydání. V případě, že není použit fixní odkaz, je klíčovým zdrojem informací, jaká z verzí dokumentu byla použita jako zdroj. Online dokumenty se mění často, a tak je vhodné uvádět, co nejpřesnější specifikaci (číslo verze, čas poslední aktualizace). Jen v případě, že dokument není verzován a nelze zjistit přesnější čas poslední modifikace, lze využít vročení (stejně jako u knih může být odhadnuto z copyrightu).
+\item[datum použití]: je to povinný údaj i když důležitý je jen v případě, kdy nelze určit přesnější verzi. Měl by být v ISO formátu tj. ve tvaru RRRR-MM-DD. Toto datum běžně generuje editor bibliografických citací podle data vytvoření záznamu. V každém případě by mělo ležet v časovém intervalu od poslední modifikace zdroje (je-li uvedeno) do data odevzdání závěrečné práce. 
+\end{description}
+
+\textbf{příklad:}
+
+\subsection{Dílčí tištěné dokumenty}
+
+U dílčích tištěných dokumentů je typické, že kromě identifikace dílčí části obsahují i identifikaci dokumentu jako celku.
+
+Klasickým příkladem jsou články ve sborníku nebo vědeckém časopise. Kapitoly v knize (monografii) se citují, jen případě, že každou z nich vytvořil jiný autor (či kolektiv autorů)
+
+V zásadě platí tato pravidla:
+
+\begin{itemize}
+\item uvádí se jen autoři dílčí časti, nikoliv například editoři sborníku nebo časopisu
+\item uvádí se pozice části v celém dokumentu nejlépe pomocí rozsahu stránek
+\item pokud má dílčí část vlastní jednoznačný identifikátor (například DOI), není potřeba uvádět identifikátor knihy nebo periodika.
+\end{itemize}
+
+
+\subsection{Dílčí online dokumenty}
+
+Tento typ citací se používá pro webové stránky, jež jsou součástí webového sídla například pro
+konkrétní stránky s dokumentací nebo dokumenty uložené na GitHubu. Pro jiné elektronické dokumenty, pokud nejsou výslovně součástí webového sídla (např. elektronického sborníku) je vhodnější použít 
+záznam samostatného dokumentu (viz výše).
+
+Název stránky je doplněn jménem webového sídla (to je typicky uvedeno v záhlaví každé stránky resp. na hlavní stránce webového sídla. Autoři se vztahují ke stránce zatímco korporátní odpovědnost je typicky vztažena k celému sídlu (pokud jsou známy autoři i korporátní odpovědnost je vhodné uvést oba údaje, vždy však musí být uveden alespoň jeden z těchto údajů). Všechy ostatní atributy se vztahují 
+
+\textbf{příklady:}
+
+What’s New In Python 3.9: Summary – Release highlights. \textit{Python 3.9.0 documentation [online]}. Python Software Foundation, October 14, 2020 [cit. 2020-10-15]. Dostupné z: https://docs.python.org/3/whatsnew/3.9.html
+
+Záznam obsahuje název dílčí části a také název celého webového sídla (v kurzívě). Odpovědná organizace je uvedena na místě nakladatele (autor není uveden a tak je tato informace klíčová). Verze je určena datem poslední modifikace (je uvedeno přímo ve tvaru použitém na stránce). Datum citování je povinné, ale v tomto případě nenese žádnou přidanou informaci (jen to, že citace byla vytvořena jen den po poslední modifikaci. Poslední součástí je URL.
+
+
+Python nonlocal statement. \textit{Stack Overflow} [online]. Stack Exchange, 2022-03 [cit. 2022-07-27]. Dostupné z: https://stackoverflow.com/questions/1261875/python-nonlocal-statement
+
+Struktura záznamu je stejná. Čas poslední modifikace byl určen z informace, že poslední modifikace proběhla před čtyřmi měsíci (je uvedena v ISO formátu, ale odpovídající by byl i údaj například ve tvaru \textit{březen 2022} nebo \textit{March 2022}).
+
+
+\section{Často kladené otázky}
+
+\subsection{Co není potřeba citovat?}
+
+Obecně platí, že citovat není potřeba znalosti, které jste získali v průběhu studia a to jak při výuce tak i z učebních materiálů (opor, skript). Citovat není potřeba ani zdroj formálních údajů (např. významu zkratek), pokud je lze snadno získat (například na Wikipedii).
+
+To jest není nutné uvádět citaci při uvedení zkratky HTTP (zkratka je všeobecně známá a běžně využívána v mnoha kurzech). Podobně není nutné odkazovat pojmy jako Internet, počítačová síť, programovací jazyk, procesor, apod.
+
+Běžně se také necitují (původní) myšlenky vedoucího práce, pokud si vedoucí práce nevyžádá jinak. Pokud vám zprostředkuje nepůvodní myšlenku, měl by vám pomoci najít originální zdroj (který uvedete v citaci).
+
+Citování není možné v případě, kdy není znám původní zdroj, resp. je v podobě, kterou není možné citovat (lidová řčení, apod.) Pravděpodobnost výskytu takových textů v informatické bakalářské práci je však velmi nízká.
+
+\subsection{Jak citovat informace z (podnikových) školení}
+
+Pokud se jedná o evidentní výtvor školitele, můžete odkazovat příslušný
+výukový materiál (i když je neveřejný). Pokud je informace nepůvodní, pak je vhodné citovat primární resp. alespoň dostatečně autoritativní zdroj.
+
+\subsection{Jak citovat ústní sdělení?}
+
+Ústní sdělení je potřeba citovat jen tehdy, když je od autoritativní osoby v oblasti její odbornosti. Pokud například píšete práci o nasazení databáze, pak je autoritativní osobou například
+správce databázového systému (který vám sdělí například zkušenosti s nasazením).
+
+Jak je uvedeno výše, ve většině případů se necitují ústní sdělení učitelů, školitelů, vedoucího práce a dalších sekundárních zdrojů.
+
+Pokud citujete ústní sdělení je vhodné s tím danou osobu seznámit či získat alespoň neformální souhlas, neboť sdělené informace nemusí být veřejné.
+
+Navzdory důležitosti ústních sdělení v některých typech prakticky zaměřených prací, není citace ústních sdělení standardizována. Jednoduchý návod nabízí například blog na citace.com [XXX].
+
+Ústí sdělení je však neověřitelné a nelze ho jednoznačně identifikovat. Proto je lepší pokud se sdělení děje například e-mailem. Citace e-mailové komunikace i dalších netradičních zdrojů shrnuje
+dokument [XXX].
+
+\subsection{Je možno citovat Wikipedii?}
+
+Citování Wikipedie se obecně nedoporučuje, neboť se jedná o terciární zdroj (encyklopedia vytvořená na základě druhotných informací) a její kvalita je značně kolísavá.
+
+Na druhou stranu Wikipedia (především v anglické verzi) často obsahuje i hodnotný a jinak jen obtížně dostupný materiál, a tak nelze citování z Wikipedie striktně zakázat.
+
+Základní doporučení pro citování z Wikipedie:
+
+\begin{itemize}
+\item citujte jen tehdy, pokud nemáte k dispozici primární zdroje (ty jsou často odkazovány přímo
+z Wikipedie)
+\item  citujte jen kvalitní články (které nejsou označeny jako problematické), které se v oblasti
+informatiky a matematiky objevují spíše na anglické Wkipedii
+\item citace z Wikipedie by měli tvořit jen malou část zdrojů (typicky méně než 10%)
+\end{itemize}
+
+Z Wikipedie rozhodně necitujte články věnované běžně známým technologiím a poznatkům, které jsou běžnou součástí kurzů. 
 
 \chapter{Zhodnocení} 
 
@@ -316,6 +650,7 @@ Typografické systémy se snaží parchantům zabránit, ne vždy se jim to ale 
 
 Závěr je klíčovou kapitolou, která může nejvíce ovlivnit vaši obhajobu. Základní částí závěru je přehledné shrnutí výstupů práce tj. co jste udělali pro dasažení cílů práce. Je nutné se vyhnout hodnocení, zda tím byli splněny cíle práce, či nikoliv (to je úkol posudků a především komise).
 
+\sloppy
 \printbibliography[title=Seznam použitých zdrojů]
 
 \appendix
@@ -353,7 +688,7 @@ Všechny tyto soubory jsou potřeba pro překlad dokumentu (logo stačí jedno v
 
 \chapter{Další přílohy}
 
-Výjimečně může práce obsahovat i další tištěné přílohy. Obecně však dávejte přednost elektronickým přílohám umístěným na GitHubu (tato kapitola tak bude úplně chybět).´
+Výjimečně může práce obsahovat i další tištěné přílohy. Obecně však dávejte přednost elektronickým přílohám umístěným na GitHubu (tato kapitola tak bude úplně chybět). 
 
 \end{document}
 
