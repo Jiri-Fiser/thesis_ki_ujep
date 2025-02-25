@@ -1,7 +1,7 @@
  %volby: 
 % male × female
-% czech × english (zatím funguje jen czech)
-% a studijní program / obor 
+% czech × english
+ % a studijní program / obor 
 % is_bc (nejvíc odladěno)
 % api_bc
 % api_ing
@@ -87,6 +87,7 @@
 % zde VYPLŇTE jméno a příjmení vedoucího práce, včetně titulů
 \newcommand{\vedouciDAT}{\ZT{RNDr. Jiřímu Škvorovi, Ph.D.}}   
 % zde VYPLŇTE jméno a příjmení vedoucího práce, včetně titulů ve třetím pádě
+% if in english, same as \vedouci
                                                            
 
 % zvětšuje o 23% vertikální okraje v tabulkách
@@ -131,9 +132,16 @@
 \vspace{2cm}
 {
 \Huge\sffamily
-\nazevcz\par
+\ifthenelse{\boolean{czech}}{\nazevcz}{\nazeven}\par
 \vspace{0.6cm}
-\Large\scshape \ifthenelse{\boolean{bc}}{bakalářská}{diplomová} práce
+\Large\scshape 
+\ifthenelse{\boolean{czech}}
+    {
+    \ifthenelse{\boolean{bc}}{bakalářská}{diplomová} práce
+    }
+    {
+    \ifthenelse{\boolean{bc}}{bachelor's}{master's} thesis
+    }
 }
 \end{center} 
  
@@ -141,11 +149,11 @@
 {
 \large
 \begin{tabular}{>{\bfseries}rl}
-    Vypracoval: 	& \autor\\
-    Vedoucí práce: 	& \vedouci\\
+    \autorNazev: 	& \autor\\
+    \vedouciNazev: 	& \vedouci\\
 &\\
-Studijní program:       & \program\\
-\ifthenelse{\boolean{api}}{Studijní obor:          & \obor\\}{}
+\programNazev:       & \program\\
+\ifthenelse{\boolean{is}}{\oborNazev:          & \obor\\}{}
 \end{tabular} 
 }
 \vspace{1.5cm}
@@ -172,15 +180,23 @@ V Linuxe lze například použít příkaz \texttt{pdftk}.
 \clearpage
 
 \thispagestyle{empty} 
-{\bfseries Prohlášení}
+{\bfseries \ifthenelse{\boolean{czech}}{Prohlášení}{Affirmation}}
 
 \vspace{0.5cm}
+\ifthenelse{\boolean{czech}}
+{
 Prohlašuji, že jsem tuto \ifthenelse{\boolean{bc}}{bakalářskou}{diplomovou} práci vypracoval\ifthenelse{\boolean{feminum}}{a}{}
 samostatně a použil\ifthenelse{\boolean{feminum}}{a}{}
 jen pramenů, které cituji a uvádím v přiloženém seznamu literatury.
+}{
+I declare hereby that I have written this \ifthenelse{\boolean{bc}}{bachelor's}{master's} thesis independently and used solely the sources
+which I quote in the enclosed list of literature.
+}
 
 \vspace{0.5em}
 
+\ifthenelse{\boolean{czech}}
+{
 Byl\ifthenelse{\boolean{feminum}}{a}{} jsem seznámen\ifthenelse{\boolean{feminum}}{a}{} 
 s tím, že se na moji práci vztahují práva a povinnosti vyplývající ze
 zákona č. 121/2000 Sb., ve znění zákona č. 81/2005 Sb., autorský zákon, zejména se
@@ -190,10 +206,18 @@ s tím, že pokud dojde k užití této práce mnou nebo bude poskytnuta licence
 subjektu, je Univerzita Jana Evangelisty Purkyně v Ústí nad Labem oprávněna ode mne
 požadovat přiměřený příspěvek na úhradu nákladu, které na vytvoření díla vynaložila, a to
 podle okolností až do jejich skutečné výše.
-
+}{
+I have been familiarised with the rights and obligations related to my work which follow from law
+number 121/2000 Sb. pursuant to law number 81/2005 Sb., authorial law, particularly in fact that
+the Jan Evangelista Purkyně University in Ústí nad Labem is entitled to the contract to use this
+work as a school work in according with § 60 paragraph 1 of authorial law and thereby, if this
+work is used or a licence for usage is issued, the Jan Evangelista Purkyně University in Ústí
+nad Labem is authorised to demand an adequate fee to cover the cost spent on creation of the
+work, namely under the circumstances up to the real price.
+}
 \vspace{2em}
 
-V Ústí nad Labem dne \today   \hfill Podpis: \makebox[4cm][s]{\dotfill}
+\ifthenelse{\boolean{czech}}{V}{In} Ústí nad Labem\ifthenelse{\boolean{czech}}{ dne}{,} \today   \hfill \ifthenelse{\boolean{czech}}{Podpis}{Signature}: \makebox[4cm][s]{\dotfill}
 
 \cleardoublepage
 \thispagestyle{empty}
@@ -201,8 +225,14 @@ V Ústí nad Labem dne \today   \hfill Podpis: \makebox[4cm][s]{\dotfill}
 \vfill
 
 \begin{flushright}
-    Děkuji vedoucímu práce \ZT{\vedouciDAT}\\ 
-    za neocenitelné rady a pomoc při tvorbě bakalářské práce.
+    \ifthenelse{\boolean{czech}}
+    {
+        Děkuji vedoucímu práce \ZT{\vedouciDAT}\\ 
+        za neocenitelné rady a pomoc při tvorbě \ifthenelse{\boolean{bc}}{bakalářské}{diplomové} práce.
+    }{
+        I thank the thesis supervisor \ZT{\vedouciDAT}\\ 
+        for invaluable advice and help in the preparation of this \ifthenelse{\boolean{bc}}{bachelor's}{master's} thesis.
+    }
 \end{flushright}
 
 \cleardoublepage

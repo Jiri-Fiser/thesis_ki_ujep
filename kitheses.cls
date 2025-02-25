@@ -66,11 +66,36 @@
 \usepackage{babel}
 \fi
 
-\newcommand{\univerzita}{Univerzita Jana Evangelisty Purkyně \\v Ústí nad Labem}
-\newcommand{\fakulta}{Přírodovědecká fakulta}
-\newcommand{\katedra}{Katedra informatiky}
-\ifthenelse{\boolean{api}}{\newcommand{\program}{Aplikovaná informatika}}
-     {\ifthenelse{\boolean{bc}}{\newcommand{\program}{Informatika pro vzdělávání}}
-                               {\newcommand{\program}{Učitelství informatiky pro střední školy}}}
-\ifthenelse{\boolean{is}}{\newcommand{\obor}{Informační systémy}}
-                         {\newcommand{\obor}{}}
+\ifthenelse{\boolean{czech}}
+{
+    \newcommand{\univerzita}{Univerzita Jana Evangelisty Purkyně \\v Ústí nad Labem}
+    \newcommand{\fakulta}{Přírodovědecká fakulta}
+    \newcommand{\katedra}{Katedra informatiky}
+    \ifthenelse{\boolean{api}}{\newcommand{\program}{Aplikovaná informatika}}
+         {\ifthenelse{\boolean{bc}}{\newcommand{\program}{Informatika pro vzdělávání}}
+                                   {\newcommand{\program}{Učitelství informatiky pro střední školy}}}
+    \ifthenelse{\boolean{is}}{\newcommand{\obor}{Informační systémy}}
+                             {\newcommand{\obor}{}}
+}{
+    \newcommand{\univerzita}{Jan Evangelista Purkyně University \\in Ústí nad Labem}
+    \newcommand{\fakulta}{Faculty of Science}
+    \newcommand{\katedra}{Department of Informatics}
+    \ifthenelse{\boolean{api}}{\newcommand{\program}{Applied Informatics}}
+         {\ifthenelse{\boolean{bc}}{\newcommand{\program}{Informatics for Education}}
+                                   {\newcommand{\program}{Upper Secondary School Teacher Training in Informatics}}}
+    \ifthenelse{\boolean{is}}{\newcommand{\obor}{Information Systems}}
+                             {\newcommand{\obor}{}}
+}
+
+\ifthenelse{\boolean{czech}}
+{
+    \newcommand{\autorNazev}{Vypracoval}
+    \newcommand{\vedouciNazev}{Vedoucí práce}
+    \newcommand{\programNazev}{Studijní program}
+    \newcommand{\oborNazev}{Studijní obor}
+}{
+    \newcommand{\autorNazev}{Author}
+    \newcommand{\vedouciNazev}{Supervisor}
+    \newcommand{\programNazev}{Course of study}
+    \newcommand{\oborNazev}{Field of study}
+}
