@@ -2,7 +2,6 @@
 % male × female
 % czech × english (zatím funguje jen czech)
 % a studijní program / obor 
-% is_bc (nejvíc odladěno)
 % api_bc
 % api_ing
 % edu_bc
@@ -17,7 +16,6 @@
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{afterpage}
-\usepackage{microtype}  % přesnější typografie
 
 % workaround for imcompatibility of czech babel and biblatex
 
@@ -25,12 +23,14 @@
 \else
 \usepackage{etoolbox}
 \makeatletter
-\newcommand\my@hsyphen{-}
+\newcommand\my@hyphen{-}
 \newcommand\my@apostroph{'}
-\patchcmd\select@language{-}{\my@hyphen }{}{\fail}
-\patchcmd\select@language{'}{\my@apostroph }{}{\fail}
+\patchcmd\select@language{-}{\my@hyphen}{}{}
+\patchcmd\select@language{'}{\my@apostroph}{}{}
 \makeatother
 \fi
+
+\usepackage{microtype}  % přesnější typografie
 
 \usepackage[style=iso-numeric,shortnumeration=true]{biblatex}
 \addbibresource{thesis.bib}
@@ -55,30 +55,26 @@
 
 % sazba ukázek kódu 
 
-\usepackage{listings}
+\usepackage{minted}
 
-% ukázka pro nastavení balíku listings pro sazbu ukázek zdrojových kódů
-\lstset{ %
-  language=Python,                % the language of the code
-  basicstyle=\small\ttfamily,    
-  backgroundcolor=\color{white},   % choose the background color. You must add \usepackage{color}
-  showspaces=false,                % show spaces adding particular underscores
-  showstringspaces=true,           % underline spaces within strings
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  frame=single,                    % adds a frame around the code
-  tabsize=3,                       % sets default tabsize to 2 spaces
-  breaklines=true,                 % sets automatic line breaking
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  keywordstyle=\bfseries,          % keyword style
-  commentstyle=\rmfamily,       % comment style
-  stringstyle=\itshape\color,   % string literal style
+\usemintedstyle{friendly}
+
+\setminted{
+  fontsize=\small,
+  baselinestretch=1,
+  bgcolor=white,
+  breaklines=true,
+  breakanywhere=false,
+  tabsize=3,
+  frame=single,
+  linenos=false
 }
 
 % barevné zvýraznění textů, které je nutno nahradit
 \newcommand{\ZT}[1]{\colorbox{yellow}{\color{red}{#1}}}
 
 
-% TOTO JE POTŘEBA ZMĚNIT !!!!!!
+
 \newcommand{\nazevcz}{\ZT{Závěrečná práce na KI PřF UJEP}}        % zde VYPLŇTE český název práce (přesně podle zadání!)
 \newcommand{\nazeven}{\ZT{Thesis on KI PřF}}     % zde VYPLŇTE anglický název práce (přesně podle zadání!)
 \newcommand{\autor}{\ZT{Jiří Fišer}}           % zde VYPLŇTE své jméno a příjmení
@@ -108,6 +104,7 @@
  
 % odstraňte pokud vám vadí absence zarovnání dole 
 \raggedbottom
+%\sloppy
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % vlastní začátek dokumentu
@@ -144,8 +141,7 @@
     Vypracoval: 	& \autor\\
     Vedoucí práce: 	& \vedouci\\
 &\\
-Studijní program:       & \program\\
-\ifthenelse{\boolean{api}}{Studijní obor:          & \obor\\}{}
+Studijní program:       & \program
 \end{tabular} 
 }
 \vspace{1.5cm}
@@ -183,7 +179,7 @@ jen pramenů, které cituji a uvádím v přiloženém seznamu literatury.
 
 Byl\ifthenelse{\boolean{feminum}}{a}{} jsem seznámen\ifthenelse{\boolean{feminum}}{a}{} 
 s tím, že se na moji práci vztahují práva a povinnosti vyplývající ze
-zákona č. 121/2000 Sb., ve znění zákona č. 81/2005 Sb., autorský zákon, zejména se
+zákona č.~121/2000 Sb., ve znění zákona č.~81/2005 Sb., autorský zákon, zejména se
 skutečností, že Univerzita Jana Evangelisty Purkyně v Ústí nad Labem má právo na uzavření
 licenční smlouvy o užití této práce jako školního díla podle § 60 odst. 1 autorského zákona, a
 s tím, že pokud dojde k užití této práce mnou nebo bude poskytnuta licence o užití jinému
@@ -390,11 +386,11 @@ stran u oboustranného tisku. V praxi se však ukazuje, že u závěrečných pr
 
 Sazba ukázek kódu je klíčová pro bakalářské práce věnované implementaci nějaké aplikace či knihovny.
 
-Základní zásady pro sazbu ukázek kódu:
-
-\begin{enumerate}
-\item 
-\end{enumerate}
+\begin{minted}{python}
+def hello(name):
+    # comment
+    print("Hello", name)
+\end{minted}
 
 \chapter{Citace}
 
